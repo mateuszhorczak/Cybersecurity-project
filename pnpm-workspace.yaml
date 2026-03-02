@@ -1,0 +1,8 @@
+onlyBuiltDependencies:
+  - '@parcel/watcher'
+  - argon2
+  - better-sqlite3
+  - esbuild
+  - sharp
+  - unrs-resolver
+  - vue-demi
