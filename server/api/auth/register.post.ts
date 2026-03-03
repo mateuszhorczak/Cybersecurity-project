@@ -1,4 +1,3 @@
-import argon2 from 'argon2'
 import { openConnection } from '#server/db'
 import { users } from '#server/db/schema'
 
@@ -36,7 +35,8 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    const hashedPassword = await argon2.hash(body.password)
+    // const hashedPassword = await argon2.hash(body.password)
+    const hashedPassword = body.password // lab1 requirements
 
     const [newUser] = await db
       .insert(users)
@@ -47,6 +47,13 @@ export default defineEventHandler(async (event) => {
         dateCreation: new Date().toISOString(),
       })
       .returning()
+
+    if (!newUser) {
+      throw createError({
+        statusCode: StatusCodes.BAD_REQUEST,
+        statusMessage: 'Registration error',
+      })
+    }
 
     const userWithoutPassword = omit(newUser, ['password'])
 

@@ -1,4 +1,3 @@
-import argon2 from 'argon2'
 import { eq } from 'drizzle-orm'
 import { openConnection } from '#server/db'
 import { users } from '#server/db/schema'
@@ -27,7 +26,8 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    const isMatch = await argon2.verify(user.password, body.password)
+    // const isMatch = await argon2.verify(user.password, body.password)
+    const isMatch = user.password === body.password // lab1 requirements
     if (!isMatch) {
       throw createError({
         statusCode: StatusCodes.UNAUTHORIZED,
