@@ -19,7 +19,10 @@ importers:
         version: 2.0.0(db0@0.3.4(@libsql/client@0.17.0)(drizzle-orm@0.45.1(@libsql/client@0.17.0)))(ioredis@5.10.0)(magicast@0.5.2)
       '@nuxt/ui':
         specifier: 4.5.0
-        version: 4.5.0(@tiptap/extensions@3.20.0(@tiptap/core@3.20.0(@tiptap/pm@3.20.0))(@tiptap/pm@3.20.0))(@tiptap/y-tiptap@3.0.2(prosemirror-model@1.25.4)(prosemirror-state@1.4.4)(prosemirror-view@1.41.6)(y-protocols@1.0.7(yjs@13.6.29))(yjs@13.6.29))(change-case@5.4.4)(db0@0.3.4(@libsql/client@0.17.0)(drizzle-orm@0.45.1(@libsql/client@0.17.0)))(embla-carousel@8.6.0)(ioredis@5.10.0)(jwt-decode@4.0.0)(magicast@0.5.2)(tailwindcss@4.2.1)(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.2)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))(vue-router@5.0.3(@vue/compiler-sfc@3.5.29)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.29(typescript@5.9.3)))(vue@3.5.29(typescript@5.9.3)))(vue@3.5.29(typescript@5.9.3))(yjs@13.6.29)(zod@4.3.6)
+        version: 4.5.0(@tiptap/extensions@3.20.0(@tiptap/core@3.20.0(@tiptap/pm@3.20.0))(@tiptap/pm@3.20.0))(@tiptap/y-tiptap@3.0.2(prosemirror-model@1.25.4)(prosemirror-state@1.4.4)(prosemirror-view@1.41.6)(y-protocols@1.0.7(yjs@13.6.29))(yjs@13.6.29))(change-case@5.4.4)(db0@0.3.4(@libsql/client@0.17.0)(drizzle-orm@0.45.1(@libsql/client@0.17.0)))(embla-carousel@8.6.0)(ioredis@5.10.0)(jwt-decode@4.0.0)(magicast@0.5.2)(tailwindcss@4.2.1)(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.2)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))(vue-router@5.0.3(@pinia/colada@0.21.7(pinia@3.0.4(typescript@5.9.3)(vue@3.5.29(typescript@5.9.3)))(vue@3.5.29(typescript@5.9.3)))(@vue/compiler-sfc@3.5.29)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.29(typescript@5.9.3)))(vue@3.5.29(typescript@5.9.3)))(vue@3.5.29(typescript@5.9.3))(yjs@13.6.29)(zod@4.3.6)
+      '@pinia/colada-nuxt':
+        specifier: 0.3.2
+        version: 0.3.2(@pinia/colada@0.21.7(pinia@3.0.4(typescript@5.9.3)(vue@3.5.29(typescript@5.9.3)))(vue@3.5.29(typescript@5.9.3)))(magicast@0.5.2)
       '@pinia/nuxt':
         specifier: 0.11.3
         version: 0.11.3(magicast@0.5.2)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.29(typescript@5.9.3)))
@@ -73,7 +76,7 @@ importers:
         version: 3.5.29(typescript@5.9.3)
       vue-router:
         specifier: ^5.0.3
-        version: 5.0.3(@vue/compiler-sfc@3.5.29)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.29(typescript@5.9.3)))(vue@3.5.29(typescript@5.9.3))
+        version: 5.0.3(@pinia/colada@0.21.7(pinia@3.0.4(typescript@5.9.3)(vue@3.5.29(typescript@5.9.3)))(vue@3.5.29(typescript@5.9.3)))(@vue/compiler-sfc@3.5.29)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.29(typescript@5.9.3)))(vue@3.5.29(typescript@5.9.3))
       zod:
         specifier: ^4.3.6
         version: 4.3.6
@@ -1795,6 +1798,17 @@ packages:
   '@phc/format@1.0.0':
     resolution: {integrity: sha512-m7X9U6BG2+J+R1lSOdCiITLLrxm+cWlNI3HUFA92oLO77ObGNzaKdh8pMLqdZcshtkKuV84olNNXDfMc4FezBQ==}
     engines: {node: '>=10'}
+
+  '@pinia/colada-nuxt@0.3.2':
+    resolution: {integrity: sha512-ICPbRZ03g43CPKYwxkWf3yFbW8iz7L7kF5QoJw7lok7k7fkz9t0tFc3SrOgjl7B8PEiw3syD7rRtu3CeGmuJeg==}
+    peerDependencies:
+      '@pinia/colada': '>=0.21.6'
+
+  '@pinia/colada@0.21.7':
+    resolution: {integrity: sha512-b8dJgRSjh7o6NnPXuvMbqv6JhoD/m/CwdadKl5SQvygsbUveYCBoqtnWzPch8AEW/UK0I3rFoATE8WrfI2cgKA==}
+    peerDependencies:
+      pinia: ^2.2.6 || ^3.0.0
+      vue: ^3.5.17
 
   '@pinia/nuxt@0.11.3':
     resolution: {integrity: sha512-7WVNHpWx4qAEzOlnyrRC88kYrwnlR/PrThWT0XI1dSNyUAXu/KBv9oR37uCgYkZroqP5jn8DfzbkNF3BtKvE9w==}
@@ -7167,7 +7181,7 @@ snapshots:
       rc9: 3.0.0
       std-env: 3.10.0
 
-  '@nuxt/ui@4.5.0(@tiptap/extensions@3.20.0(@tiptap/core@3.20.0(@tiptap/pm@3.20.0))(@tiptap/pm@3.20.0))(@tiptap/y-tiptap@3.0.2(prosemirror-model@1.25.4)(prosemirror-state@1.4.4)(prosemirror-view@1.41.6)(y-protocols@1.0.7(yjs@13.6.29))(yjs@13.6.29))(change-case@5.4.4)(db0@0.3.4(@libsql/client@0.17.0)(drizzle-orm@0.45.1(@libsql/client@0.17.0)))(embla-carousel@8.6.0)(ioredis@5.10.0)(jwt-decode@4.0.0)(magicast@0.5.2)(tailwindcss@4.2.1)(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.2)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))(vue-router@5.0.3(@vue/compiler-sfc@3.5.29)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.29(typescript@5.9.3)))(vue@3.5.29(typescript@5.9.3)))(vue@3.5.29(typescript@5.9.3))(yjs@13.6.29)(zod@4.3.6)':
+  '@nuxt/ui@4.5.0(@tiptap/extensions@3.20.0(@tiptap/core@3.20.0(@tiptap/pm@3.20.0))(@tiptap/pm@3.20.0))(@tiptap/y-tiptap@3.0.2(prosemirror-model@1.25.4)(prosemirror-state@1.4.4)(prosemirror-view@1.41.6)(y-protocols@1.0.7(yjs@13.6.29))(yjs@13.6.29))(change-case@5.4.4)(db0@0.3.4(@libsql/client@0.17.0)(drizzle-orm@0.45.1(@libsql/client@0.17.0)))(embla-carousel@8.6.0)(ioredis@5.10.0)(jwt-decode@4.0.0)(magicast@0.5.2)(tailwindcss@4.2.1)(typescript@5.9.3)(vite@7.3.1(@types/node@25.3.2)(jiti@2.6.1)(lightningcss@1.31.1)(terser@5.46.0)(tsx@4.21.0)(yaml@2.8.2))(vue-router@5.0.3(@pinia/colada@0.21.7(pinia@3.0.4(typescript@5.9.3)(vue@3.5.29(typescript@5.9.3)))(vue@3.5.29(typescript@5.9.3)))(@vue/compiler-sfc@3.5.29)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.29(typescript@5.9.3)))(vue@3.5.29(typescript@5.9.3)))(vue@3.5.29(typescript@5.9.3))(yjs@13.6.29)(zod@4.3.6)':
     dependencies:
       '@floating-ui/dom': 1.7.5
       '@iconify/vue': 5.0.0(vue@3.5.29(typescript@5.9.3))
@@ -7236,7 +7250,7 @@ snapshots:
       vaul-vue: 0.4.1(reka-ui@2.8.2(vue@3.5.29(typescript@5.9.3)))(vue@3.5.29(typescript@5.9.3))
       vue-component-type-helpers: 3.2.5
     optionalDependencies:
-      vue-router: 5.0.3(@vue/compiler-sfc@3.5.29)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.29(typescript@5.9.3)))(vue@3.5.29(typescript@5.9.3))
+      vue-router: 5.0.3(@pinia/colada@0.21.7(pinia@3.0.4(typescript@5.9.3)(vue@3.5.29(typescript@5.9.3)))(vue@3.5.29(typescript@5.9.3)))(@vue/compiler-sfc@3.5.29)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.29(typescript@5.9.3)))(vue@3.5.29(typescript@5.9.3))
       zod: 4.3.6
     transitivePeerDependencies:
       - '@azure/app-configuration'
@@ -7601,6 +7615,18 @@ snapshots:
       '@parcel/watcher-win32-x64': 2.5.6
 
   '@phc/format@1.0.0': {}
+
+  '@pinia/colada-nuxt@0.3.2(@pinia/colada@0.21.7(pinia@3.0.4(typescript@5.9.3)(vue@3.5.29(typescript@5.9.3)))(vue@3.5.29(typescript@5.9.3)))(magicast@0.5.2)':
+    dependencies:
+      '@nuxt/kit': 4.3.1(magicast@0.5.2)
+      '@pinia/colada': 0.21.7(pinia@3.0.4(typescript@5.9.3)(vue@3.5.29(typescript@5.9.3)))(vue@3.5.29(typescript@5.9.3))
+    transitivePeerDependencies:
+      - magicast
+
+  '@pinia/colada@0.21.7(pinia@3.0.4(typescript@5.9.3)(vue@3.5.29(typescript@5.9.3)))(vue@3.5.29(typescript@5.9.3))':
+    dependencies:
+      pinia: 3.0.4(typescript@5.9.3)(vue@3.5.29(typescript@5.9.3))
+      vue: 3.5.29(typescript@5.9.3)
 
   '@pinia/nuxt@0.11.3(magicast@0.5.2)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.29(typescript@5.9.3)))':
     dependencies:
@@ -11832,7 +11858,7 @@ snapshots:
       '@vue/devtools-api': 6.6.4
       vue: 3.5.29(typescript@5.9.3)
 
-  vue-router@5.0.3(@vue/compiler-sfc@3.5.29)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.29(typescript@5.9.3)))(vue@3.5.29(typescript@5.9.3)):
+  vue-router@5.0.3(@pinia/colada@0.21.7(pinia@3.0.4(typescript@5.9.3)(vue@3.5.29(typescript@5.9.3)))(vue@3.5.29(typescript@5.9.3)))(@vue/compiler-sfc@3.5.29)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.29(typescript@5.9.3)))(vue@3.5.29(typescript@5.9.3)):
     dependencies:
       '@babel/generator': 7.29.1
       '@vue-macros/common': 3.1.2(vue@3.5.29(typescript@5.9.3))
@@ -11853,6 +11879,7 @@ snapshots:
       vue: 3.5.29(typescript@5.9.3)
       yaml: 2.8.2
     optionalDependencies:
+      '@pinia/colada': 0.21.7(pinia@3.0.4(typescript@5.9.3)(vue@3.5.29(typescript@5.9.3)))(vue@3.5.29(typescript@5.9.3))
       '@vue/compiler-sfc': 3.5.29
       pinia: 3.0.4(typescript@5.9.3)(vue@3.5.29(typescript@5.9.3))
 

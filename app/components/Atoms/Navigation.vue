@@ -71,8 +71,14 @@ const account = {
   ],
 }
 
+const chat = {
+  icon: 'i-mdi-chat',
+  label: 'Chat',
+  to: '/messages'
+}
+
 const baseItems = [homePage, events, eventsToday, searchEvents]
-const loggedItems = [createEvent, exportPdf]
+const loggedItems = [createEvent, exportPdf, chat]
 const unLoggedItems = [account]
 
 const items = computed<NavigationMenuItem[]>(() => {

@@ -19,5 +19,5 @@ export interface UserWithoutPassword {
   id: number
   email: string
   username: string
-  dateCreation: string
+  dateCreation: string | null
 }

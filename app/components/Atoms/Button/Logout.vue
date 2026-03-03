@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const logout = async () => {
-  await useRouter().push('logout')
+  await useRouter().push('/logout')
 }
 </script>
 
