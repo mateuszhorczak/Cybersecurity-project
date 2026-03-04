@@ -7,7 +7,7 @@ import {
 } from 'drizzle-zod'
 import { z } from 'zod/v4'
 import { omit } from '../../../shared/utils/omit'
-import { events } from './'
+import { events, messagePermissions } from './'
 
 const MIN_USERNAME_LENGTH = 3
 const MAX_USERNAME_LENGTH = 50
@@ -55,4 +55,5 @@ export const userUpdateSchema = createUpdateSchema(
 
 export const usersRelations = relations(users, ({ many }) => ({
   events: many(events),
+  messagePermissions: many(messagePermissions),
 }))

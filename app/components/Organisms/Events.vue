@@ -3,8 +3,10 @@ const eventStore = useEventStore()
 </script>
 
 <template>
-  <div v-if="eventStore.events.length"
-   class="grid xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1">
+  <div
+    v-if="eventStore.events.length"
+    class="grid xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1"
+  >
     <MoleculesEvent
       v-for="event in eventStore.events"
       :id="event.id"

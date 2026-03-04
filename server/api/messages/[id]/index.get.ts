@@ -8,6 +8,13 @@ export default defineEventHandler(async (event) => {
     const idNum = Number.parseInt(id as string, 10)
     const result = await db.query.messages.findMany({
       where: (messages, { eq }) => eq(messages.id, idNum),
+      with: {
+        messagePermissions: {
+          columns: {
+            userId: true,
+          },
+        },
+      },
     })
 
     setResponseStatus(event, StatusCodes.OK)

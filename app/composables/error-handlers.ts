@@ -1,6 +1,6 @@
 import type { FormError } from '@nuxt/ui'
-import type { ZodError } from 'zod'
 import type { FetchError } from 'ofetch'
+import type { ZodError } from 'zod'
 
 export function handleValidationError(
   error: ZodError | undefined,

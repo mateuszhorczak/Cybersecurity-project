@@ -74,7 +74,7 @@ const account = {
 const chat = {
   icon: 'i-mdi-chat',
   label: 'Chat',
-  to: '/messages'
+  to: '/messages',
 }
 
 const baseItems = [homePage, events, eventsToday, searchEvents]

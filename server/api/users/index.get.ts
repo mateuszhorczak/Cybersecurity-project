@@ -4,14 +4,10 @@ import { openConnection } from '#server/db'
 export default defineEventHandler(async (event) => {
   try {
     const db = openConnection()
-    const result = await db.query.messages.findMany({
-      with: {
-        messagePermissions: {
-          columns: {
-            userId: true,
-            messageId: true,
-          },
-        },
+    const result = await db.query.users.findMany({
+      columns: {
+        id: true,
+        username: true,
       },
     })
 

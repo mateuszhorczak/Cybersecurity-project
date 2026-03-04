@@ -6,7 +6,7 @@ import {
   createUpdateSchema,
 } from 'drizzle-zod'
 import { z } from 'zod/v4'
-import { users } from './'
+import { messagePermissions, users } from './'
 
 const MIN_TEXT_LENGTH = 2
 const MAX_TEXT_LENGTH = 200
@@ -29,11 +29,12 @@ export const messages = sqliteTable('messages', {
   dateCreation: text('date_creation'),
 })
 
-export const messagesRelations = relations(messages, ({ one }) => ({
+export const messagesRelations = relations(messages, ({ one, many }) => ({
   user: one(users, {
     fields: [messages.userId],
     references: [users.id],
   }),
+  messagePermissions: many(messagePermissions),
 }))
 
 export const messageSelectSchema = createSelectSchema(messages)

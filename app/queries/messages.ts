@@ -15,7 +15,10 @@ export const messageById = defineQueryOptions(
     key: KEYS.detailById(messageId),
     query: async () => {
       return $fetch(`/api/messages/${messageId}`).catch((error) =>
-        handleApiError(error, 'Wystąpił błąd podczas pobierania konkretnej wiadomości'),
+        handleApiError(
+          error,
+          'Wystąpił błąd podczas pobierania konkretnej wiadomości',
+        ),
       )
     },
     enabled: Boolean(messageId),

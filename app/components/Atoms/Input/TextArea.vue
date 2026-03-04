@@ -16,9 +16,18 @@ const model = defineModel<string>({ default: '' })
 </script>
 
 <template>
-  <UFormField :label="props.label" :help="props.help" :name="props.name">
+  <UFormField
+    :label="props.label"
+    :help="props.help"
+    :name="props.name"
+  >
     <UTextarea
-      v-model="model" :icon="props.icon" :placeholder="props.placeholder"
-      :variant="props.variant" autoresize class="w-full" />
+      v-model="model"
+      :icon="props.icon"
+      :placeholder="props.placeholder"
+      :variant="props.variant"
+      autoresize
+      class="w-full"
+    />
   </UFormField>
 </template>
