@@ -22,6 +22,41 @@
       "when": 1772485887380,
       "tag": "0002_many_marten_broadcloak",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "6",
+      "when": 1772638344163,
+      "tag": "0003_sticky_starbolt",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "6",
+      "when": 1772638614442,
+      "tag": "0004_happy_hitman",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "6",
+      "when": 1772644327002,
+      "tag": "0005_clear_the_hood",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "6",
+      "when": 1772647915602,
+      "tag": "0006_vengeful_morbius",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "6",
+      "when": 1772650268816,
+      "tag": "0007_smart_mentallo",
+      "breakpoints": true
     }
   ]
 }

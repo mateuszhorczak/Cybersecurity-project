@@ -3,6 +3,7 @@ interface InputMessageType {
   userId: number
   text: string
   loggedUser: number
+  messagePermissions: MessagePermission[]
 }
 
 interface OutputMessageType {
@@ -11,7 +12,10 @@ interface OutputMessageType {
     type: string
     text: string
   }[]
-  metadata: { userId: number }
+  metadata: {
+    userId: number
+    messagePermissions: MessagePermission[]
+  }
 }
 
 export function transformMessageArray<T extends InputMessageType>(
@@ -19,17 +23,20 @@ export function transformMessageArray<T extends InputMessageType>(
 ): (T & OutputMessageType)[] {
   if (!array) return []
 
-  return array.map(item => ({
+  return array.map((item) => ({
     ...item,
     id: item.id.toString(),
     role: 'user',
     side: item.loggedUser === item.userId ? 'right' : 'left',
-    parts: [{
-      type: 'text',
-      text: item.text,
-    }],
+    parts: [
+      {
+        type: 'text',
+        text: item.text,
+      },
+    ],
     metadata: {
       userId: item.userId,
-    }
+      messagePermissions: item.messagePermissions,
+    },
   }))
 }

@@ -2,7 +2,7 @@
 </script>
 
 <template>
- <UFooter>
+  <UFooter>
     <template #left>
       <MoleculesFooterCopyrights />
     </template>

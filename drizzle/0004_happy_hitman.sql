@@ -1,0 +1,1 @@
+ALTER TABLE `users` ADD `user_role_id` integer DEFAULT 1 NOT NULL REFERENCES user_roles(id);
