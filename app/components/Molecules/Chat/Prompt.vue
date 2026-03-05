@@ -36,12 +36,18 @@ const sendMessage = async () => {
   })
   clearText()
 }
+
+const handleSubmit = async () => {
+  const promise = isEditMode.value ? editMessage() : sendMessage()
+  await promise
+}
 </script>
 
 <template>
   <UChatPrompt
     v-model="text"
     variant="soft"
+    @keydown.enter.exact.prevent="handleSubmit"
   >
     <div
       v-if="isEditMode"
