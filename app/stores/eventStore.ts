@@ -108,8 +108,8 @@ export const useEventStore = defineStore('eventStore', () => {
       )
 
       // Wyswietlenie przykladowych links
-      const rawData = JSON.parse(JSON.stringify(data.value))
-      console.log('Odebrane dane:', rawData)
+      // const rawData = JSON.parse(JSON.stringify(data.value))
+      // console.log('Odebrane dane:', rawData)
 
       // @ts-expect-error .................
       events.value = data.value?.data || null

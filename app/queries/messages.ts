@@ -21,6 +21,6 @@ export const messageById = defineQueryOptions(
         ),
       )
     },
-    enabled: Boolean(messageId),
+    enabled: Boolean(messageId) && messageId > 0,
   }),
 )

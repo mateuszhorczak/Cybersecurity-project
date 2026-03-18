@@ -6,7 +6,8 @@ import {
   createUpdateSchema,
 } from 'drizzle-zod'
 import { z } from 'zod/v4'
-import { omit } from '../../../shared/utils/omit'
+// import { omit } from '../../../shared/utils/omit'
+import { omit } from '#shared/utils/omit'
 import { events, messagePermissions } from './'
 
 const MIN_USERNAME_LENGTH = 3

@@ -11,8 +11,7 @@ export const useMessageStore = defineStore('messageStore', () => {
 
   const { data: messages, refresh: fetchMessages } = useQuery(messagesList)
   const { data: singleMessage, refresh: fetchMessageById } = useQuery(
-    messageById,
-    () => ({
+    () => messageById({
       messageId: selectedMessageId.value,
     }),
   )

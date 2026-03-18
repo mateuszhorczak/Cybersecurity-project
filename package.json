@@ -39,7 +39,9 @@
   "packageManager": "pnpm@10.30.3",
   "devDependencies": {
     "@biomejs/biome": "^2.4.4",
+    "@iconify-json/lucide": "^1.2.98",
     "@iconify-json/mdi": "^1.2.3",
+    "@pinia/colada-devtools": "^0.4.5",
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^25.3.2",
     "@types/pdfmake": "^0.3.2",

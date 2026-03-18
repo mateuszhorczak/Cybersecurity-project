@@ -35,6 +35,7 @@ const sendMessage = async () => {
     text: text.value.trim(),
   })
   clearText()
+  await messageStore.fetchMessages() // invalidate problems with logouts and fake id's, search better solution to fix it
 }
 
 const handleSubmit = async () => {
@@ -51,27 +52,31 @@ const handleSubmit = async () => {
   >
     <div
       v-if="isEditMode"
-      class="flex"
+      class="flex space-x-1"
     >
-      <UButton
-        icon="i-mdi-close"
-        color="neutral"
-        variant="ghost"
-        size="sm"
-        aria-label="Anuluj edycję"
-        @click="cancelEdit"
-      />
-
-      <UChatPromptSubmit
-        icon="i-mdi-pencil"
-        @click="editMessage"
-      />
+      <UTooltip text="Odrzuć edycję">
+        <UButton
+          icon="i-mdi-close"
+          color="error"
+          variant="ghost"
+          size="sm"
+          aria-label="Anuluj edycję"
+          @click="cancelEdit"
+        />
+      </UTooltip>
+      <UTooltip text="Edytuj">
+        <UChatPromptSubmit
+          icon="i-mdi-pencil"
+          @click="editMessage"
+        />
+      </UTooltip>
     </div>
 
-    <UChatPromptSubmit
-      v-else
-      icon="i-mdi-send"
-      @click="sendMessage"
-    />
+    <UTooltip v-else text="Wyślij">
+      <UChatPromptSubmit
+        icon="i-mdi-send"
+        @click="sendMessage"
+      />
+    </UTooltip>
   </UChatPrompt>
 </template>

@@ -1,3 +1,5 @@
+import { KEYS as MESSAGE_KEYS } from '~/queries/messages'
+
 export const useAuthStore = defineStore('auth', () => {
   const user = useCookie<User | null>('auth:user', {
     default: () => null,
@@ -7,6 +9,11 @@ export const useAuthStore = defineStore('auth', () => {
     default: () => null,
     watch: true,
   })
+
+  const clearCache = () => {
+    const cache = useQueryCache()
+    cache.invalidateQueries({ key: MESSAGE_KEYS.root })
+  }
 
   const login = async (userAuth: UserAuthentication) => {
     try {
@@ -20,6 +27,9 @@ export const useAuthStore = defineStore('auth', () => {
 
       token.value = data.token
       user.value = data.user
+
+      const cache = useQueryCache()
+      await cache.invalidateQueries({ key: MESSAGE_KEYS.root })
 
       return { success: true, data }
     } catch (error) {
@@ -54,6 +64,8 @@ export const useAuthStore = defineStore('auth', () => {
   const logout = () => {
     token.value = null
     user.value = null
+
+    clearCache()
   }
 
   const isLoggedIn = computed(() => Boolean(token.value))

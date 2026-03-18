@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { pl } from '@nuxt/ui/locale'
+import { PiniaColadaDevtools } from '@pinia/colada-devtools'
 </script>
 
 <template>
@@ -8,4 +9,5 @@ import { pl } from '@nuxt/ui/locale'
       <NuxtPage />
     </NuxtLayout>
   </UApp>
+  <PiniaColadaDevtools  />
 </template>

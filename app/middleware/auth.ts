@@ -1,9 +1,9 @@
 export default defineNuxtRouteMiddleware(async (to, _from) => {
   const authStore = useAuthStore()
 
-  const isLogoutPage = to.path !== '/logout'
-  const isLoginPage = to.path !== '/login'
-  const isRegisterPage = to.path !== '/register'
+  const isLogoutPage = to.path === '/logout'
+  const isLoginPage = to.path === '/login'
+  const isRegisterPage = to.path === '/register'
 
   if (authStore.token) {
     const { data: isTokenExpired } = await useFetch<boolean>(

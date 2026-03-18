@@ -22,21 +22,21 @@ export const useCreateMessage = defineMutation(() => {
 
       let updatedList = prevList
 
-      if (prevList.length > 0) {
-        updatedList = [
-          ...prevList,
-          {
-            // biome-ignore lint/style/noMagicNumbers: We're generating a negative random id here.
-            id: (Math.random() * -1e3) ^ 0,
-            ...message,
-            dateCreation: new Date().toISOString(),
-            messagePermissions: [],
-          },
-        ]
-
-        cache.setQueryData(listKey, updatedList)
-        cache.cancelQueries({ key: listKey })
+      const optimisticObject = {
+        // biome-ignore lint/style/noMagicNumbers: We're generating a negative random id here.
+        id: (Math.random() * -1e3) ^ 0,
+        ...message,
+        dateCreation: new Date().toISOString(),
+        messagePermissions: [],
       }
+
+      updatedList = [
+        ...prevList,
+        optimisticObject,
+      ]
+
+      cache.setQueryData(listKey, updatedList)
+      cache.cancelQueries({ key: listKey })
 
       return {
         prevList,
@@ -90,9 +90,9 @@ export const useUpdateMessage = defineMutation(() => {
         updatedList = prevList.map((existing) =>
           existing.id === message.id
             ? {
-                ...existing,
-                text: message.text,
-              }
+              ...existing,
+              text: message.text,
+            }
             : existing,
         )
         cache.setQueryData(listKey, updatedList)
