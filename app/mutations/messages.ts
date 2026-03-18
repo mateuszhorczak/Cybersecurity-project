@@ -30,10 +30,7 @@ export const useCreateMessage = defineMutation(() => {
         messagePermissions: [],
       }
 
-      updatedList = [
-        ...prevList,
-        optimisticObject,
-      ]
+      updatedList = [...prevList, optimisticObject]
 
       cache.setQueryData(listKey, updatedList)
       cache.cancelQueries({ key: listKey })
@@ -90,9 +87,9 @@ export const useUpdateMessage = defineMutation(() => {
         updatedList = prevList.map((existing) =>
           existing.id === message.id
             ? {
-              ...existing,
-              text: message.text,
-            }
+                ...existing,
+                text: message.text,
+              }
             : existing,
         )
         cache.setQueryData(listKey, updatedList)
