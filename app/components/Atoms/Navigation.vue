@@ -9,6 +9,12 @@ const homePage = {
   to: '/',
 }
 
+const adminPage = {
+  label: 'admin',
+  icon: 'i-mdi-shield',
+  to: '/admin',
+}
+
 const events = {
   label: 'Wydarzenia',
   icon: 'i-mdi-calendar',
@@ -81,10 +87,14 @@ const baseItems = [homePage, events, eventsToday, searchEvents]
 const loggedItems = [createEvent, exportPdf, chat]
 const unLoggedItems = [account]
 
+const userItems = [...baseItems, ...loggedItems]
+
 const items = computed<NavigationMenuItem[]>(() => {
-  return auth.isLoggedIn
-    ? [...baseItems, ...loggedItems]
-    : [...baseItems, ...unLoggedItems]
+  return auth.user?.isAdmin
+    ? [...userItems, adminPage]
+    : auth.isLoggedIn
+      ? [...userItems]
+      : [...baseItems, ...unLoggedItems]
 })
 </script>
 

@@ -1,4 +1,4 @@
-import { relations } from 'drizzle-orm'
+import { relations, sql } from 'drizzle-orm'
 import { integer, sqliteTable, text } from 'drizzle-orm/sqlite-core'
 import {
   createInsertSchema,
@@ -6,9 +6,8 @@ import {
   createUpdateSchema,
 } from 'drizzle-zod'
 import { z } from 'zod/v4'
-// import { omit } from '../../../shared/utils/omit'
-import { omit } from '#shared/utils/omit'
-import { events, messagePermissions } from './'
+import { omit } from '../../../shared/utils/omit'
+import { events, failedLoginAttempts, messagePermissions } from './'
 
 const MIN_USERNAME_LENGTH = 3
 const MAX_USERNAME_LENGTH = 50
@@ -44,7 +43,10 @@ export const users = sqliteTable('users', {
   email: text('email').notNull().unique(),
   username: text('username').notNull().unique(),
   password: text('password').notNull(),
-  dateCreation: text('date_creation'),
+  isAdmin: integer('is_admin', { mode: 'boolean' }).notNull().default(false),
+  dateCreation: text('date_creation')
+    .notNull()
+    .default(sql`(CURRENT_TIMESTAMP)`),
 })
 
 export const userSelectSchema = createSelectSchema(users)
@@ -57,4 +59,5 @@ export const userUpdateSchema = createUpdateSchema(
 export const usersRelations = relations(users, ({ many }) => ({
   events: many(events),
   messagePermissions: many(messagePermissions),
+  failedLoginAttempts: many(failedLoginAttempts),
 }))

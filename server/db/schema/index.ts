@@ -1,4 +1,6 @@
 export * from './events'
+export * from './failedLoginAttempts'
 export * from './messagePermissions'
 export * from './messages'
+export * from './restrictions'
 export * from './users'

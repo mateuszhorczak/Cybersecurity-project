@@ -23,3 +23,14 @@ export function isTokenExpired(token: string): boolean {
     return true
   }
 }
+
+export function isAdmin(token: string): boolean {
+  try {
+    const payload = jwt.decode(token) as { isAdmin: boolean }
+    if (!payload) return false
+    return payload.isAdmin
+  } catch (e) {
+    console.error('Invalid token', e)
+    return false
+  }
+}
