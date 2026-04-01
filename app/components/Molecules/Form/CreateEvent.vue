@@ -55,52 +55,18 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-  <UForm
-    :validate="validate"
-    :state="state"
-    class="space-y-4"
-    @submit="onSubmit"
-  >
-    <AtomsInput
-      v-model="state.name"
-      icon="i-mdi-event"
-      placeholder="Wpisz nazwę wydarzenia"
-      variant="subtle"
-      label="Nazwa wydarzenia"
-      name="name"
-    />
+  <UForm :validate="validate" :state="state" class="space-y-4" @submit="onSubmit">
+    <AtomsInput v-model="state.name" icon="i-mdi-event" placeholder="Wpisz nazwę wydarzenia" variant="subtle"
+      label="Nazwa wydarzenia" name="name" />
 
-    <AtomsInput
-      v-model="state.type"
-      icon="i-mdi-event"
-      placeholder="Wpisz typ wydarzenia"
-      variant="subtle"
-      label="Typ eventu"
-      name="type"
-    />
+    <AtomsInput v-model="state.type" icon="i-mdi-event" placeholder="Wpisz typ wydarzenia" variant="subtle"
+      label="Typ eventu" name="type" />
 
-    <AtomsInput
-      v-model="state.description"
-      icon="i-mdi-event"
-      placeholder="Wpisz opis wydarzenia"
-      variant="subtle"
-      label="Opis"
-      name="description"
-    />
+    <AtomsInput v-model="state.description" icon="i-mdi-event" placeholder="Wpisz opis wydarzenia" variant="subtle"
+      label="Opis" name="description" />
 
-    <AtomsInputCalendar
-      v-model:date="date"
-      label="Data"
-      name="event-date"
-      icon="i-mdi-calendar"
-    />
+    <AtomsInputCalendar v-model:date="date" label="Data" name="event-date" icon="i-mdi-calendar" />
 
-    <AtomsButton
-      icon="i-mdi-calendar-plus"
-      label="Stwórz"
-      size="lg"
-      type="submit"
-      variant="solid"
-    />
+    <AtomsButton icon="i-mdi-calendar-plus" label="Stwórz" size="lg" type="submit" variant="solid" />
   </UForm>
 </template>

@@ -1,31 +1,14 @@
 <script setup lang="ts">
-import type { FormSubmitEvent } from '@nuxt/ui'
-import * as z from 'zod'
-
-const MIN_USERNAME = 3
-const MIN_PASSWORD = 8
+import type { FormError, FormSubmitEvent } from '@nuxt/ui'
+import type * as z from 'zod'
+import { userLoginSchema } from '#server/db/schema'
 
 const authStore = useAuthStore()
 const toast = useToast()
 const router = useRouter()
 const isSubmitting = ref(false)
 
-const schema = z.object({
-  username: z
-    .string({ message: 'Wymagane' })
-    .trim()
-    .min(
-      MIN_USERNAME,
-      `Nazwa użytkownika musi składać się z co najmniej ${MIN_USERNAME} znaków`,
-    ),
-  password: z
-    .string({ message: 'Wymagane' })
-    .trim()
-    .min(
-      MIN_PASSWORD,
-      `Hasło musi składać się z co najmniej ${MIN_PASSWORD} znaków`,
-    ),
-})
+const schema = userLoginSchema
 
 type Schema = z.output<typeof schema>
 
@@ -33,6 +16,11 @@ const state = reactive<Partial<Schema>>({
   username: undefined,
   password: undefined,
 })
+
+const validate: (state: Partial<Schema>) => FormError[] = (state) => {
+  const { error } = schema.safeParse({ ...state })
+  return handleValidationError(error)
+}
 
 async function onSubmit(event: FormSubmitEvent<Schema>) {
   isSubmitting.value = true
@@ -72,38 +60,14 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-  <UForm
-    :schema="schema"
-    :state="state"
-    class="space-y-4"
-    @submit="onSubmit"
-  >
-    <AtomsInput
-      v-model="state.username"
-      icon="i-mdi-account"
-      placeholder="Wpisz nazwę użytkownika"
-      variant="subtle"
-      label="Nazwa użytkownika"
-      name="username"
-    />
+  <UForm :validate="validate" :state="state" class="space-y-4" @submit="onSubmit">
+    <AtomsInput v-model="state.username" icon="i-mdi-account" placeholder="Wpisz nazwę użytkownika" variant="subtle"
+      label="Nazwa użytkownika" name="username" />
 
-    <AtomsInputPassword
-      v-model="state.password"
-      icon="i-mdi-password"
-      placeholder="Wpisz hasło"
-      variant="subtle"
-      label="Hasło"
-      name="password"
-    />
+    <AtomsInputPassword v-model="state.password" icon="i-mdi-password" placeholder="Wpisz hasło" variant="subtle"
+      label="Hasło" name="password" />
 
-    <AtomsButton
-      icon="i-mdi-account-arrow-right"
-      label="Zaloguj się"
-      size="lg"
-      variant="solid"
-      type="submit"
-      :loading="isSubmitting"
-      :disabled="isSubmitting"
-    />
+    <AtomsButton icon="i-mdi-account-arrow-right" label="Zaloguj się" size="lg" variant="solid" type="submit"
+      :loading="isSubmitting" :disabled="isSubmitting" />
   </UForm>
 </template>

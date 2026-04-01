@@ -15,36 +15,39 @@ const adminPage = {
   to: '/admin',
 }
 
-const events = {
-  label: 'Wydarzenia',
-  icon: 'i-mdi-calendar',
-  to: '/events',
-}
-
-const eventsToday = {
-  label: 'Dziś',
-  icon: 'i-mdi-calendar-star',
-  to: '/events/today',
-}
-
 const searchEvents = {
-  label: 'Wyszukaj wydarzenia',
+  label: 'Wydarzenia',
   icon: 'i-mdi-magnify',
   children: [
     {
-      label: 'po nazwie',
+      label: 'Wyszukaj po nazwie',
       icon: 'i-mdi-text-box-search',
       to: '/events/find',
     },
     {
-      label: 'po dacie',
+      label: 'Wyszukaj po dacie',
       icon: 'i-mdi-calendar-filter',
       to: '/events/find/by-date',
     },
     {
-      label: 'po tygodniu',
+      label: 'Wyszukaj po tygodniu',
       icon: 'i-mdi-calendar-week',
       to: '/events/find/by-week',
+    },
+    {
+      label: 'Wszystkie',
+      icon: 'i-mdi-calendar',
+      to: '/events',
+    },
+    {
+      label: 'Dziś',
+      icon: 'i-mdi-calendar-star',
+      to: '/events/today',
+    },
+    {
+      label: 'Eksportuj do pdf',
+      icon: 'i-mdi-file-pdf',
+      to: '/events/pdf',
     },
   ],
 }
@@ -53,12 +56,6 @@ const createEvent = {
   label: 'Stwórz',
   icon: 'i-mdi-plus-circle',
   to: '/events/new',
-}
-
-const exportPdf = {
-  label: 'Eksportuj do pdf',
-  icon: 'i-mdi-file-pdf',
-  to: '/events/pdf',
 }
 
 const account = {
@@ -83,8 +80,14 @@ const chat = {
   to: '/messages',
 }
 
-const baseItems = [homePage, events, eventsToday, searchEvents]
-const loggedItems = [createEvent, exportPdf, chat]
+const profile = {
+  icon: 'i-mdi-account',
+  label: 'Profil',
+  to: '/profile',
+}
+
+const baseItems = [homePage, searchEvents]
+const loggedItems = [createEvent, chat, profile]
 const unLoggedItems = [account]
 
 const userItems = [...baseItems, ...loggedItems]
@@ -99,8 +102,5 @@ const items = computed<NavigationMenuItem[]>(() => {
 </script>
 
 <template>
-  <UNavigationMenu
-    :items="items"
-    highlight
-  />
+  <UNavigationMenu :items="items" highlight />
 </template>

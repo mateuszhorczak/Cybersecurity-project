@@ -7,14 +7,19 @@ import {
 } from 'drizzle-zod'
 import { z } from 'zod/v4'
 import { omit } from '../../../shared/utils/omit'
-import { events, failedLoginAttempts, messagePermissions } from './'
+import {
+  events,
+  failedLoginAttempts,
+  messagePermissions,
+  passwordFragments,
+} from './'
 
 const MIN_USERNAME_LENGTH = 3
 const MAX_USERNAME_LENGTH = 50
 const MIN_EMAIL_LENGTH = 1
 const MAX_EMAIL_LENGTH = 50
-const MIN_PASSWORD_LENGTH = 8
-const MAX_PASSWORD_LENGTH = 50
+const MIN_PASSWORD_LENGTH = 12
+const MAX_PASSWORD_LENGTH = 18
 
 const validation = {
   email: z
@@ -50,7 +55,24 @@ export const users = sqliteTable('users', {
 })
 
 export const userSelectSchema = createSelectSchema(users)
-export const userInsertSchema = createInsertSchema(users, validation)
+export const userPasswordSelectSchema = userSelectSchema.pick({
+  password: true,
+})
+
+export const userRegisterSchema = createInsertSchema(users, validation)
+
+export const userLoginSchema = createUpdateSchema(
+  users,
+  omit(validation, ['email', 'password']),
+).extend({
+  // override register password
+  password: z
+    .string({ error: 'Wymagane' })
+    .trim()
+    .min(MIN_PASSWORD_LENGTH, { error: 'Podane hasło jest za krótkie' })
+    .max(MAX_PASSWORD_LENGTH, { error: 'Podane hasło jest za długie' }),
+})
+
 export const userUpdateSchema = createUpdateSchema(
   users,
   omit(validation, ['password']),
@@ -60,4 +82,5 @@ export const usersRelations = relations(users, ({ many }) => ({
   events: many(events),
   messagePermissions: many(messagePermissions),
   failedLoginAttempts: many(failedLoginAttempts),
+  passwordFragments: many(passwordFragments),
 }))

@@ -1,7 +1,10 @@
+import argon2 from 'argon2'
 import { eq } from 'drizzle-orm'
 import { openConnection } from '#server/db'
-import { users } from '#server/db/schema'
+import { passwordFragments, users } from '#server/db/schema'
 import { generateJwtToken } from '#server/jwtModule'
+
+const GENERATE_FRAGMENT_NUMBER = 15
 
 export default defineEventHandler(async (event) => {
   const db = openConnection()
@@ -11,12 +14,15 @@ export default defineEventHandler(async (event) => {
   try {
     const restrictions = await db.query.restrictions.findMany()
 
-    const FailureCountUntilBanned =
-      restrictions[Restrictions.LockAttempts - 1]?.value
-    const FailureCountUntilDelayed =
-      restrictions[Restrictions.WarningAttempts - 1]?.value
-    const LoginFailureDelay =
-      restrictions[Restrictions.WarningTimeout - 1]?.value
+    const FailureCountUntilBanned = restrictions.find(
+      (item) => item.id === Restrictions.LockAttempts,
+    )?.value
+    const FailureCountUntilDelayed = restrictions.find(
+      (item) => item.id === Restrictions.WarningAttempts,
+    )?.value
+    const LoginFailureDelay = restrictions.find(
+      (item) => item.id === Restrictions.WarningTimeout,
+    )?.value
 
     if (!(body.username && body.password)) {
       throw createError({
@@ -87,8 +93,7 @@ export default defineEventHandler(async (event) => {
       await delayResponse(event, LoginFailureDelay)
     }
 
-    // const isMatch = await argon2.verify(user.password, body.password)
-    const isMatch = user.password === body.password // lab1 requirements
+    const isMatch = await argon2.verify(user.password, body.password)
     if (!isMatch) {
       console.error(
         `[LOGIN] ${new Date().toISOString()} Failed login attempt for user ${body.username} (${ipAddress})`,
@@ -103,6 +108,30 @@ export default defineEventHandler(async (event) => {
         statusCode: StatusCodes.UNAUTHORIZED,
         statusMessage: 'Nieprawidłowe hasło',
       })
+    }
+
+    const existingFragments = await db.query.passwordFragments.findFirst({
+      where: eq(passwordFragments.userId, user.id),
+    })
+
+    if (!existingFragments) {
+      console.info(
+        `[LOGIN] Migrating user ${user.username} - generating password fragments.`,
+      )
+
+      const rawFragments = await generatePasswordFragments(
+        body.password,
+        GENERATE_FRAGMENT_NUMBER,
+      )
+
+      const fragmentValues = rawFragments.map((f) => ({
+        userId: user.id,
+        startPosition: f.startPosition,
+        length: f.length,
+        fragmentHash: f.fragmentHash,
+      }))
+
+      await db.insert(passwordFragments).values(fragmentValues)
     }
 
     const { password, ...userWithoutPassword } = user

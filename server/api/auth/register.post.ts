@@ -1,5 +1,10 @@
+import argon2 from 'argon2'
 import { openConnection } from '#server/db'
-import { users } from '#server/db/schema'
+import { passwordFragments, users } from '#server/db/schema'
+
+const MIN_PASSWORD = 12
+const MAX_PASSWORD = 18
+const GENERATE_FRAGMENT_NUMBER = 15
 
 export default defineEventHandler(async (event) => {
   const db = openConnection()
@@ -10,6 +15,16 @@ export default defineEventHandler(async (event) => {
       throw createError({
         statusCode: StatusCodes.BAD_REQUEST,
         statusMessage: 'Wszystkie pola są wymagane!',
+      })
+    }
+
+    if (
+      body.password.length < MIN_PASSWORD
+      || body.password.length > MAX_PASSWORD
+    ) {
+      throw createError({
+        statusCode: StatusCodes.BAD_REQUEST,
+        statusMessage: `Hasło musi mieć od ${MIN_PASSWORD} do ${MAX_PASSWORD} znaków.`,
       })
     }
 
@@ -35,8 +50,7 @@ export default defineEventHandler(async (event) => {
       })
     }
 
-    // const hashedPassword = await argon2.hash(body.password)
-    const hashedPassword = body.password // lab1 requirements
+    const hashedPassword = await argon2.hash(body.password)
 
     const [newUser] = await db
       .insert(users)
@@ -54,6 +68,19 @@ export default defineEventHandler(async (event) => {
         statusMessage: 'Registration error',
       })
     }
+
+    const rawFragments = await generatePasswordFragments(
+      body.password,
+      GENERATE_FRAGMENT_NUMBER,
+    )
+    const fragmentValues = rawFragments.map((f) => ({
+      userId: newUser.id,
+      startPosition: f.startPosition,
+      length: f.length,
+      fragmentHash: f.fragmentHash,
+    }))
+
+    await db.insert(passwordFragments).values(fragmentValues)
 
     const userWithoutPassword = omit(newUser, ['password'])
 

@@ -1,6 +1,7 @@
 import { KEYS as MESSAGE_KEYS } from '~/queries/messages'
 
 export const useAuthStore = defineStore('auth', () => {
+  const isLoading = ref<boolean>(false)
   const user = useCookie<User | null>('auth:user', {
     default: () => null,
     watch: true,
@@ -41,6 +42,54 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  const loginFragment = async (payload: {
+    username: string
+    challengeId: number
+    fragment: string
+  }) => {
+    try {
+      const data = await $fetch<{ token: string; user: User }>(
+        '/api/auth/login-fragment',
+        {
+          method: 'POST',
+          body: payload,
+        },
+      )
+
+      token.value = data.token
+      user.value = data.user
+      const cache = useQueryCache()
+      await cache.invalidateQueries({ key: MESSAGE_KEYS.root })
+
+      return { success: true, data }
+    } catch (error) {
+      return {
+        success: false,
+        // @ts-expect-error type error silence
+        error: error.data?.statusMessage || error.message,
+      }
+    }
+  }
+
+  const getChallange = async (username: string) => {
+    try {
+      const data = await $fetch('/api/auth/challange', {
+        method: 'POST',
+        body: { username },
+      })
+      return {
+        success: true,
+        data,
+      }
+    } catch (error) {
+      return {
+        success: false,
+        // @ts-expect-error type error silence
+        error: error.data?.statusMessage || error.message,
+      }
+    }
+  }
+
   const register = async (user: NewUser) => {
     try {
       const response = await $fetch('/api/auth/register', {
@@ -61,6 +110,29 @@ export const useAuthStore = defineStore('auth', () => {
     }
   }
 
+  const changePassword = async (payload: ChangePasswordPayload) => {
+    isLoading.value = true
+    const { data } = await $fetch('/api/auth/change-password', {
+      method: 'PATCH',
+      body: payload,
+    })
+      .then((data) => {
+        useNuxtApp().$createSuccessToast({
+          title: 'Poprawnie zmieniono hasło',
+          description: 'Zaloguj się ponownie',
+        })
+        return { data }
+      })
+      .catch((error) => {
+        handleApiError(error, 'Wystąpił błąd podczas tworzenia konta')
+        return { data: { success: false } }
+      })
+      .finally(() => {
+        isLoading.value = false
+      })
+    return data.success
+  }
+
   const logout = () => {
     token.value = null
     user.value = null
@@ -72,6 +144,8 @@ export const useAuthStore = defineStore('auth', () => {
 
   return {
     login,
+    loginFragment,
+    getChallange,
     logout,
     register,
     isLoggedIn,
@@ -80,6 +154,8 @@ export const useAuthStore = defineStore('auth', () => {
       return user.value
     }),
     token: readonly(token),
+    isLoading,
+    changePassword,
   }
 })
 

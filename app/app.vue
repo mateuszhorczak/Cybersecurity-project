@@ -9,5 +9,5 @@ import { PiniaColadaDevtools } from '@pinia/colada-devtools'
       <NuxtPage />
     </NuxtLayout>
   </UApp>
-  <PiniaColadaDevtools  />
+  <PiniaColadaDevtools />
 </template>

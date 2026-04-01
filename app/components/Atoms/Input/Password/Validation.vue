@@ -8,7 +8,7 @@ enum PasswordStrength {
   Good = 4,
 }
 
-const MIN_PASSWORD = 8
+const MIN_PASSWORD = 12
 
 interface Props {
   placeholder: InputProps['placeholder']
@@ -27,7 +27,7 @@ const show = ref(false)
 function checkStrength(str: string) {
   const requirements = [
     {
-      regex: /.{8,}/,
+      regex: /.{12,}/,
       text: `Wymagane co najmniej ${MIN_PASSWORD} znaków`,
     },
     { regex: /\d/, text: 'Wymagana co najmniej jedna liczba' },

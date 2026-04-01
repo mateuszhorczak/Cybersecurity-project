@@ -6,9 +6,12 @@ definePageMeta({
 
 <template>
   <UCard>
-    <AtomsSubHeading class="mx-auto">
-      Stwórz nowe konto użytkownika
-    </AtomsSubHeading>
-    <MoleculesFormRegister />
+    <div class="space-y-4">
+      <AtomsSubHeading>
+        Stwórz nowe konto użytkownika
+      </AtomsSubHeading>
+      <USeparator />
+      <MoleculesFormRegister />
+    </div>
   </UCard>
 </template>

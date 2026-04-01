@@ -1,13 +1,14 @@
-export interface User {
-  id: number
+interface BaseUser {
   email: string
   username: string
+}
+
+export interface User extends BaseUser {
+  id: number
   isAdmin: boolean
 }
 
-export interface NewUser {
-  email: string
-  username: string
+export interface NewUser extends BaseUser {
   password: string
 }
 
@@ -16,9 +17,13 @@ export interface UserAuthentication {
   password: string
 }
 
-export interface UserWithoutPassword {
+export interface UserWithoutPassword extends BaseUser {
   id: number
-  email: string
-  username: string
   dateCreation: string | null
+}
+
+export interface ChangePasswordPayload {
+  id: User['id']
+  password: NewUser['password']
+  oldPassword: NewUser['password']
 }

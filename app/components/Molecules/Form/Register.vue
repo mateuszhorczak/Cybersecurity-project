@@ -1,14 +1,14 @@
 <script setup lang="ts">
 import type { FormSubmitEvent } from '@nuxt/ui'
 import * as z from 'zod'
-import { userInsertSchema } from '#server/db/schema'
+import { userRegisterSchema } from '#server/db/schema'
 
 const authStore = useAuthStore()
 const toast = useToast()
 const router = useRouter()
 const isSubmitting = ref(false)
 
-const schema = userInsertSchema
+const schema = userRegisterSchema
   .extend({
     passwordRepeated: z
       .string({ message: 'Wymagane' })
@@ -69,56 +69,20 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
-  <UForm
-    :schema="schema"
-    :state="state"
-    class="space-y-4"
-    @submit="onSubmit"
-  >
-    <AtomsInput
-      v-model="state.email"
-      icon="i-mdi-email"
-      placeholder="Wpisz swój adres email"
-      variant="subtle"
-      label="Email"
-      name="email"
-    />
+  <UForm :schema="schema" :state="state" class="space-y-4" @submit="onSubmit">
+    <AtomsInput v-model="state.email" icon="i-mdi-email" placeholder="Wpisz swój adres email" variant="subtle"
+      label="Email" name="email" />
 
-    <AtomsInput
-      v-model="state.username"
-      icon="i-mdi-account"
-      placeholder="Wpisz nazwę użytkownika"
-      variant="subtle"
-      label="Nazwa użytkownika"
-      name="username"
-    />
+    <AtomsInput v-model="state.username" icon="i-mdi-account" placeholder="Wpisz nazwę użytkownika" variant="subtle"
+      label="Nazwa użytkownika" name="username" />
 
-    <AtomsInputPasswordValidation
-      v-model="state.password"
-      icon="i-mdi-password"
-      placeholder="Wpisz ponownie hasło"
-      variant="subtle"
-      label="Hasło"
-      name="password"
-    />
+    <AtomsInputPasswordValidation v-model="state.password" icon="i-mdi-password" placeholder="Wpisz ponownie hasło"
+      variant="subtle" label="Hasło" name="password" />
 
-    <AtomsInputPassword
-      v-model="state.passwordRepeated"
-      icon="i-mdi-password"
-      placeholder="Wpisz hasło"
-      variant="subtle"
-      label="Powtórz hasło"
-      name="passwordRepeated"
-    />
+    <AtomsInputPassword v-model="state.passwordRepeated" icon="i-mdi-password" placeholder="Wpisz hasło"
+      variant="subtle" label="Powtórz hasło" name="passwordRepeated" />
 
-    <AtomsButton
-      icon="i-mdi-account-arrow-up"
-      label="Stwórz konto"
-      size="lg"
-      type="submit"
-      variant="solid"
-      :loading="isSubmitting"
-      :disabled="isSubmitting"
-    />
+    <AtomsButton icon="i-mdi-account-arrow-up" label="Stwórz konto" size="lg" type="submit" variant="solid"
+      :loading="isSubmitting" :disabled="isSubmitting" />
   </UForm>
 </template>

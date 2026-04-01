@@ -26,7 +26,9 @@ type WarningAttemptsSchema = z.output<typeof warningAttemptsSchema>
 const warningAttemptsState = reactive<Partial<WarningAttemptsSchema>>({
   value:
     restrictionStore.restrictions && restrictionStore.restrictions.length > 0
-      ? restrictionStore.restrictions[Restrictions.WarningAttempts - 1]?.value
+      ? restrictionStore.restrictions.find(
+          (item) => item.id === Restrictions.WarningAttempts,
+        )?.value
       : undefined,
 })
 
@@ -50,7 +52,9 @@ type LockAttemptsSchema = z.output<typeof lockAttemptsSchema>
 const lockAttemptsState = reactive<Partial<LockAttemptsSchema>>({
   value:
     restrictionStore.restrictions && restrictionStore.restrictions.length > 0
-      ? restrictionStore.restrictions[Restrictions.LockAttempts - 1]?.value
+      ? restrictionStore.restrictions.find(
+          (item) => item.id === Restrictions.LockAttempts,
+        )?.value
       : undefined,
 })
 
@@ -74,7 +78,9 @@ type WarningTimeoutSchema = z.output<typeof warningTimeoutSchema>
 const warningTimeoutState = reactive<Partial<WarningTimeoutSchema>>({
   value:
     restrictionStore.restrictions && restrictionStore.restrictions.length > 0
-      ? restrictionStore.restrictions[Restrictions.WarningTimeout - 1]?.value
+      ? restrictionStore.restrictions.find(
+          (item) => item.id === Restrictions.WarningTimeout,
+        )?.value
       : undefined,
 })
 
@@ -93,17 +99,20 @@ watch(
   (restrictions) => {
     warningAttemptsState.value =
       restrictions && restrictions.length > 0
-        ? restrictions[Restrictions.WarningAttempts - 1]?.value
+        ? restrictions.find((item) => item.id === Restrictions.WarningAttempts)
+            ?.value
         : undefined
 
     lockAttemptsState.value =
       restrictions && restrictions.length > 0
-        ? restrictions[Restrictions.LockAttempts - 1]?.value
+        ? restrictions.find((item) => item.id === Restrictions.LockAttempts)
+            ?.value
         : undefined
 
     warningTimeoutState.value =
       restrictions && restrictions.length > 0
-        ? restrictions[Restrictions.WarningTimeout - 1]?.value
+        ? restrictions.find((item) => item.id === Restrictions.WarningTimeout)
+            ?.value
         : undefined
   },
   { immediate: true },
@@ -111,7 +120,7 @@ watch(
 </script>
 
 <template>
-<UContainer class="py-10 max-w-2xl">
+  <UContainer class="py-10 max-w-2xl">
     <div class="mb-8">
       <h1 class="text-2xl font-bold text-highlighted">
         Ustawienia bezpieczeństwa logowania
@@ -137,20 +146,11 @@ watch(
         </template>
 
         <ClientOnly>
-          <UForm
-            :schema="warningAttemptsSchema"
-            :state="warningAttemptsState"
-            class="flex items-end gap-3"
-            @submit="onWarningAttemptsSubmit"
-          >
+          <UForm :schema="warningAttemptsSchema" :state="warningAttemptsState" class="flex items-end gap-3"
+            @submit="onWarningAttemptsSubmit">
             <UFormField name="value" label="Liczba prób" required class="flex-1">
-              <UInputNumber
-                v-model="warningAttemptsState.value"
-                :min="1"
-                :max="MAX_ATTEMPTS"
-                placeholder="np. 3"
-                class="w-full"
-              />
+              <UInputNumber v-model="warningAttemptsState.value" :min="1" :max="MAX_ATTEMPTS" placeholder="np. 3"
+                class="w-full" />
             </UFormField>
             <UButton type="submit" icon="i-lucide-save" class="mb-0.5">
               Zapisz
@@ -173,20 +173,11 @@ watch(
         </template>
 
         <ClientOnly>
-          <UForm
-            :schema="lockAttemptsSchema"
-            :state="lockAttemptsState"
-            class="flex items-end gap-3"
-            @submit="onLockAttemptsSubmit"
-          >
+          <UForm :schema="lockAttemptsSchema" :state="lockAttemptsState" class="flex items-end gap-3"
+            @submit="onLockAttemptsSubmit">
             <UFormField name="value" label="Liczba prób" required class="flex-1">
-              <UInputNumber
-                v-model="lockAttemptsState.value"
-                :min="1"
-                :max="MAX_ATTEMPTS"
-                placeholder="np. 5"
-                class="w-full"
-              />
+              <UInputNumber v-model="lockAttemptsState.value" :min="1" :max="MAX_ATTEMPTS" placeholder="np. 5"
+                class="w-full" />
             </UFormField>
             <UButton type="submit" icon="i-lucide-save" class="mb-0.5">
               Zapisz
@@ -209,27 +200,18 @@ watch(
         </template>
 
         <ClientOnly>
-           <UForm
-            :schema="warningTimeoutSchema"
-            :state="warningTimeoutState"
-            class="flex items-end gap-3"
-            @submit="onWarningTimeoutSubmit"
-          >
+          <UForm :schema="warningTimeoutSchema" :state="warningTimeoutState" class="flex items-end gap-3"
+            @submit="onWarningTimeoutSubmit">
             <UFormField name="value" label="Czas (sekundy)" required class="flex-1">
-              <UInputNumber
-                v-model="warningTimeoutState.value"
-                :min="1"
-                :max="MAX_TIMEOUT"
-                placeholder="np. 1"
-                class="w-full"
-              />
+              <UInputNumber v-model="warningTimeoutState.value" :min="1" :max="MAX_TIMEOUT" placeholder="np. 1"
+                class="w-full" />
             </UFormField>
             <UButton type="submit" icon="i-lucide-save" class="mb-0.5">
               Zapisz
             </UButton>
           </UForm>
         </ClientOnly>
-     </UCard>
+      </UCard>
     </div>
   </UContainer>
 </template>
